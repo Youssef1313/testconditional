@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType Condition="'$(Configuration)'=='Release'">WinExe</OutputType>
+		<OutputType Condition="'$(Configuration)'=='Debug'">Exe</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup Condition="exists('..\testconditional.Windows')">
+		<EmbeddedResource Include="..\testconditional.Windows\Package.appxmanifest" LogicalName="Package.appxmanifest" />
+		<Content Include="..\testconditional.Windows\Images\StoreLogo.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
+		<PackageReference Include="Uno.WinUI.Skia.Gtk" Version="4.7.0-dev.417" />
+		<PackageReference Include="Uno.WinUI.RemoteControl" Version="4.7.0-dev.417" Condition="'$(Configuration)'=='Debug'" />
+		<PackageReference Include="Uno.UI.Adapter.Microsoft.Extensions.Logging" Version="4.7.0-dev.417" />
+		<PackageReference Include="Uno.WinUI.Lottie" Version="4.7.0-dev.417" />
+		<PackageReference Include="SkiaSharp.Views.Uno.WinUI" Version="2.88.3" />
+		<PackageReference Include="SkiaSharp.Skottie" Version="2.88.3" />
+	</ItemGroup>
+	
+	<ItemGroup>
+    <ProjectReference Include="..\testconditional\testconditional.csproj">
+      <SetTargetFramework>TargetFrameworks=$(TargetFramework)</SetTargetFramework>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Properties>XamarinProjectType=$(XamarinProjectType);TargetFrameworkIdentifier=$(TargetFrameworkIdentifier);TargetFrameworkVersion=$(TargetFrameworkVersion);EnableFrameworkPathOverride=$(EnableFrameworkPathOverride)</Properties>
+    </ProjectReference>
+	</ItemGroup>
+
+	<Import Project="..\testconditional.Base\base.props" />
+
+  <Target Name="ForceBuildClassLib" BeforeTargets="BeforeBuild">
+    <MSBuild Projects="..\testconditional\testconditional.csproj" Properties="TargetFramework=$(TargetFramework);XamarinProjectType=$(XamarinProjectType);TargetFrameworkIdentifier=$(TargetFrameworkIdentifier);TargetFrameworkVersion=$(TargetFrameworkVersion);EnableFrameworkPathOverride=$(EnableFrameworkPathOverride)"/>
+	</Target>
+</Project>

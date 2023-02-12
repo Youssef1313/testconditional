@@ -1,0 +1,16 @@
+{
+  "solution": {
+    "path": "testconditional.sln",
+    "projects": [
+		"testconditional\\testconditional.csproj",
+
+		"testconditional.Mobile\\testconditional.Mobile.csproj",
+
+		"testconditional.Wasm\\testconditional.Wasm.csproj",
+
+		"testconditional.Skia.Gtk\\testconditional.Skia.Gtk.csproj",
+
+		"testconditional.Skia.Gtk\\testconditional.Skia.Gtk.csproj",
+    ]
+  }
+}
